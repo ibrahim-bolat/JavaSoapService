@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>org.example</groupId>
-    <artifactId>SpringBootSoapWS</artifactId>
+    <artifactId>SpringBootSoapWSCRUD</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>Spring Boot Soap Web Service Producer</description>
 
@@ -35,12 +35,11 @@
             <artifactId>wsdl4j</artifactId>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>3.1.2</version>
-        </dependency>-->
+        </dependency>
 
         <!-- MySQL Connector -->
         <dependency>
@@ -62,25 +61,34 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!-- jaxb-maven-plugin (generate xsd to java without episode)-->
+            <!--jaxb2-maven-plugin generate xsd form java pojo -->
             <plugin>
-                <groupId>org.jvnet.jaxb</groupId>
-                <artifactId>jaxb-maven-plugin</artifactId>
-                <version>4.0.8</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
-                        <id>xjc</id>
+                        <id>schemagen</id>
+                        <phase>process-classes</phase>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>schemagen</goal>
                         </goals>
-                        <configuration>
-                            <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
-                            <generateDirectory>src/main/java</generateDirectory>
-                            <generatePackage>org.example.model</generatePackage>
-                            <episode>false</episode>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <outputDirectory>${project.basedir}/src/main/resources/xsds/</outputDirectory>
+                    <transformSchemas>
+                        <transformSchema>
+                            <uri>http://www.example.org/products</uri>
+                            <toFile>products.xsd</toFile>
+                        </transformSchema>
+                    </transformSchemas>
+                    <sources>
+                        <source>${basedir}/src/main/java/org/example/entity/</source>
+                        <source>${basedir}/src/main/java/org/example/model/</source>
+                    </sources>
+                    <verbose>true</verbose>
+                </configuration>
             </plugin>
         </plugins>
     </build>

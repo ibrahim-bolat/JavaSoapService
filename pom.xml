@@ -19,6 +19,8 @@
         <module>ApacheCXFwithSpringBootSoapWSClient</module>
         <module>SpringBootSoapWS</module>
         <module>SpringBootSoapWSClient</module>
+        <module>SpringBootSoapWSCRUD</module>
+        <module>SpringBootSoapWSClientCRUD</module>
     </modules>
     <build>
         <plugins>
