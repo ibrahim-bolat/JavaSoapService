@@ -67,10 +67,11 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            <!-- cxf java2ws plugin soap servisinden wsdl oluştuuryor ama kapsamlığı olduğu için -->
-            <!-- istemci tarafında servis proxy sınıfları oluşmasına rağmen bind işleminde hata oluşuyor -->
-            <!-- bu nedenle wsdl i pluginle değilde direk http://localhost:8080/services/ProductService?wsdl adresinde-->
-            <!-- soap çalıştırılınca oluşuyor onu kopyala onla client tarafında servis proxy sınıflarını oluştur  -->
+            <!-- cxf java2ws plugin soap servisinden wsdl oluşturuyor ama java pojo sınıfında tüm field lara namespace falan tanımlamak gerekiyor -->
+            <!-- tanımlanamzsa wsdl de bazı değerler eksik kaldığı için bu wsdl ile oluşturulan istemci tarafındaki proxy sınıflar ile -->
+            <!-- istemci request arasındaki bind işleminde hata oluşabiliyor -->
+            <!-- bu nedenle wsdl i bu pluginle değilde direk http://localhost:8080/services/ProductService?wsdl adresinde-->
+            <!-- soap web servis çalıştırılınca dinamik oluşan wsdli kopyala onla client tarafında servis proxy sınıflarını oluştur  -->
             <!-- client tarafındaki cxf-codegen-plugin plugini sınıfları doğru oluşturuyor onda sıkıntı yok  -->
             <plugin>
                 <groupId>org.apache.cxf</groupId>
@@ -84,6 +85,7 @@
                             <serviceName>ProductService</serviceName>
                             <className>org.example.service.ProductServiceImpl</className>
                             <outputFile>${basedir}/src/main/resources/wsdl/ProductService.wsdl</outputFile>
+                            <address>http://localhost:8080/services/ProductService</address>
                             <genWsdl>true</genWsdl>
                             <verbose>true</verbose>
                         </configuration>

@@ -60,9 +60,10 @@
             </plugin>
             <!-- cxf-codegen-plugin -->
             <!-- cxf-codegen-plugin ile proxy sınıflarını oluştururken doğrudan web servisin wsdl URL ini kullan  -->
-            <!-- Çünkü URL deki wsdl dinamik olduğu için sınıfların düzgün oluşması lazım -->
-            <!-- Eğer WS tarafındaki cxf java2ws plugin eklentisi ile oluşan wsdl i kullanırsan sınıflar düzgün oluşmayabilir -->
-            <!-- Çünkü eklenti Web servisten wsdl oluştururken statik bilgiler ile oluşturuyor -->
+            <!-- Çünkü soap ws URL'indeki wsdl dinamik olduğu için namespace değerleri falan sınıfların fieldlarında düzgün tanımlanıyor-->
+            <!-- Eğer WS tarafındaki cxf java2ws plugin eklentisi ile oluşan wsdl i kullanırsan soap ws teki pojo sınıflarında  -->
+            <!-- her field için namespace alanlarını falan tanımlamak gerekiyorki oluşturulan wsdl  ile istemci tarafında servis proxy  -->
+            <!-- sınıfları oluşturulurken sınıflardaki field lar düzgün tanımlanabilsin -->
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
@@ -80,17 +81,17 @@
                                         <packagename>http://service.example.org/=org.example.serviceproxy</packagename>
                                     </packagenames>
                                     <wsdl>http://localhost:8080/services/ProductService?wsdl</wsdl>
-                                    <!--<wsdl>${project.basedir}/src/main/resources/wsdl/ProductService.wsdl</wsdl>-->
                                     <!-- <wsdlLocation>classpath:wsdl/ProductService.wsdl</wsdlLocation> -->
-                                </wsdlOption>
-                            </wsdlOptions>
-                        </configuration>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-</project>
+                                    <!--  <wsdl>${project.basedir}/src/main/resources/wsdl/ProductService.wsdl</wsdl>-->
+                                   </wsdlOption>
+                               </wsdlOptions>
+                           </configuration>
+                           <goals>
+                               <goal>wsdl2java</goal>
+                           </goals>
+                       </execution>
+                   </executions>
+               </plugin>
+           </plugins>
+       </build>
+   </project>

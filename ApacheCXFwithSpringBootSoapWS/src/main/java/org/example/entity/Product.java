@@ -4,10 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 
 @Entity
@@ -17,13 +14,13 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement
+    @XmlElement(namespace = "http://service.example.org/")
     private Long id;
 
-    @XmlElement
+    @XmlElement(namespace = "http://service.example.org/")
     private String name;
 
-    @XmlElement
+    @XmlElement(namespace = "http://service.example.org/")
     private Double price;
 
     public Product() {
