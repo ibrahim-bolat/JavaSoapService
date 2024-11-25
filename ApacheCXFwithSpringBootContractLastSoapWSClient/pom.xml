@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.1.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>org.example</groupId>
+    <artifactId>ApacheCXFwithSpringBootContractLastSoapWSClient</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <description>Apache CXF with Spring Boot Soap Service Client</description>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- Apache CXF -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+            <version>4.0.5</version>
+        </dependency>
+
+        <!--Apache CXF WS-Security -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>4.0.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>ProductServiceClient</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- cxf-codegen-plugin -->
+            <!-- cxf-codegen-plugin ile proxy sınıflarını oluştururken doğrudan web servisin wsdl URL ini kullan  -->
+            <!-- Çünkü soap ws URL'indeki wsdl dinamik olduğu için namespace değerleri falan sınıfların fieldlarında düzgün tanımlanıyor-->
+            <!-- Eğer WS tarafındaki cxf java2ws plugin eklentisi ile oluşan wsdl i kullanırsan soap ws teki pojo sınıflarında  -->
+            <!-- her field için namespace alanlarını falan tanımlamak gerekiyorki oluşturulan wsdl  ile istemci tarafında servis proxy  -->
+            <!-- sınıfları oluşturulurken sınıflardaki field lar düzgün tanımlanabilsin -->
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>4.0.5</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <!-- <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot> -->
+                            <sourceRoot>${project.basedir}/src/main/java</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <packagenames>
+                                        <packagename>http://service.example.org/=org.example.serviceproxy</packagename>
+                                    </packagenames>
+                                    <wsdl>http://localhost:8080/services/ProductService?wsdl</wsdl>
+                                    <!-- <wsdlLocation>classpath:wsdl/ProductService.wsdl</wsdlLocation> -->
+                                    <!--  <wsdl>${project.basedir}/src/main/resources/wsdl/ProductService.wsdl</wsdl>-->
+                                   </wsdlOption>
+                               </wsdlOptions>
+                           </configuration>
+                           <goals>
+                               <goal>wsdl2java</goal>
+                           </goals>
+                       </execution>
+                   </executions>
+               </plugin>
+           </plugins>
+       </build>
+   </project>

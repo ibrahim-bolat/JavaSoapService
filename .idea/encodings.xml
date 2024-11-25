@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/ApacheCXFwithSpringBootSoapWSClientContractLast/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/ApacheCXFwithSpringBootSoapWSContractLast/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SpringBootSoapWSClientContractFirst/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SpringBootSoapWSClientContractLast/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SpringBootSoapWSContractFirst/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/SpringBootSoapWSContractLast/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApacheCXFwithSpringBootContractLastSoapWS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ApacheCXFwithSpringBootContractLastSoapWSClient/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringBootContractFirstSoapWS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringBootContractFirstSoapWSClient/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringBootContractLastSoapWS/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SpringBootContractLastSoapWSClient/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
