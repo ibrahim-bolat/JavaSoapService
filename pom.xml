@@ -15,12 +15,12 @@
     </properties>
 
     <modules>
-        <module>ApacheCXFwithSpringBootSoapWSContractLast</module>
-        <module>ApacheCXFwithSpringBootSoapWSClientContractLast</module>
-        <module>SpringBootSoapWSContractFirst</module>
-        <module>SpringBootSoapWSClientContractFirst</module>
-        <module>SpringBootSoapWSContractLast</module>
-        <module>SpringBootSoapWSClientContractLast</module>
+        <module>ApacheCXFwithSpringBootContractLastSoapWS</module>
+        <module>ApacheCXFwithSpringBootContractLastSoapWSClient</module>
+        <module>SpringBootContractFirstSoapWS</module>
+        <module>SpringBootContractFirstSoapWSClient</module>
+        <module>SpringBootContractLastSoapWS</module>
+        <module>SpringBootContractLastSoapWSClient</module>
     </modules>
     <build>
         <plugins>

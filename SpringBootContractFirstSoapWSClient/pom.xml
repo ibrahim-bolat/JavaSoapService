@@ -31,13 +31,25 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-security</artifactId>
+            <version>4.0.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
-        <finalName>SpringBootSoapWSClient</finalName>
+        <finalName>SpringBootContractFirstSoapWSClient</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

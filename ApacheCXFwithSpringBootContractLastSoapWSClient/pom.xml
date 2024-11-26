@@ -49,7 +49,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>ProductServiceClient</finalName>
+        <finalName>ApacheCXFwithSpringBootContractLastSoapWSClient</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>

@@ -2,15 +2,17 @@ package org.example.client.controller;
 
 import org.example.client.clientservice.ProductClient;
 import org.example.serviceproxy.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductClient productClient;
+    private final ProductClient productClient;
+
+    public ProductController(ProductClient productClient) {
+        this.productClient = productClient;
+    }
 
     @GetMapping("/{id}")
     public GetProductResponse getProduct(@PathVariable Long id) {

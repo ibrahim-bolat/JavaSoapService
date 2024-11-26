@@ -8,6 +8,8 @@
         <option value="$PROJECT_DIR$/SpringBootSoapWSContractLast/pom.xml" />
         <option value="$PROJECT_DIR$/SpringBootSoapWSClientContractFirst/pom.xml" />
         <option value="$PROJECT_DIR$/ApacheCXFwithSpringBootSoapWSClientContractLast/pom.xml" />
+        <option value="$PROJECT_DIR$/ApacheCXFwithSpringBootContractLastSoapWS/pom.xml" />
+        <option value="$PROJECT_DIR$/SpringBootContractFirstSoapWSClient/pom.xml" />
       </list>
     </option>
   </component>

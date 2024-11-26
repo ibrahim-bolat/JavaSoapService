@@ -31,6 +31,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-security</artifactId>
+            <version>4.0.10</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
         </dependency>
@@ -56,7 +68,7 @@
 
     </dependencies>
     <build>
-        <finalName>SpringBootSoapWS</finalName>
+        <finalName>SpringBootContractFirstSoapWS</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

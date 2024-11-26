@@ -58,7 +58,7 @@
     </dependencies>
 
     <build>
-        <finalName>ProductService</finalName>
+        <finalName>ApacheCXFwithSpringBootContractLastSoapWS</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
