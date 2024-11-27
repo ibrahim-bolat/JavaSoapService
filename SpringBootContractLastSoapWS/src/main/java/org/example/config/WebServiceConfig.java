@@ -72,7 +72,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         securityInterceptor.setSecurementPasswordType(WSConstants.PW_DIGEST); //response header daki password type belirleniyor
         securityInterceptor.setSecurementUsername(serverUsername); //response header a server username ekleniyor
         securityInterceptor.setSecurementPassword(serverPassword); //response header a server password ekleniyor
-        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//request header daki client username token doğrulaması yapılıyor
+        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//request header daki client username token doğrulaması yapılıyor.Bu satır çok önemli bu olmadan alttaki callbackHandler ile doğrulama yapılmaz.
         securityInterceptor.setValidationCallbackHandler(callbackHandler()); //request header daki client username ve password doğrulaması yapılıyor
 
         return securityInterceptor;

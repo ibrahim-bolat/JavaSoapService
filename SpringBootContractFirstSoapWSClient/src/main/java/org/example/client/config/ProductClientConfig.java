@@ -55,7 +55,7 @@ public class ProductClientConfig {
         securityInterceptor.setSecurementPasswordType(WSConstants.PW_DIGEST); //request header daki password type belirleniyor
         securityInterceptor.setSecurementUsername(clientUsername); //request header a client username ekleniyor
         securityInterceptor.setSecurementPassword(clientPassword); //request header a client password ekleniyor
-        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//response header daki server username token doğrulaması yapılıyor
+        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//response header daki server username token doğrulaması yapılıyor. Bu satır çok önemli bu olmadan alttaki callbackHandler ile doğrulama yapılmaz.
         securityInterceptor.setValidationCallbackHandler(callbackHandler()); //response header daki server username ve password doğrulaması yapılıyor
 
         return securityInterceptor;
