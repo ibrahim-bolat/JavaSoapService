@@ -14,57 +14,67 @@ import org.springframework.ws.soap.security.wss4j2.callback.SimplePasswordValida
 
 import java.util.Collections;
 
+import static org.example.client.constant.WSEndpoint.WS_ENDPOINT_URL;
+import static org.example.client.constant.WSEndpoint.MarshallerContextPath;
+
 @Configuration
 public class ProductClientConfig {
 
-    @Value("${ws_username}")
-    private String username;
+    @Value("${ws_client_username}")
+    private String clientUsername;
 
-    @Value("${ws_password}")
-    private String password;
+    @Value("${ws_client_password}")
+    private String clientPassword;
+
+    @Value("${ws_server_username}")
+    private String serverUsername;
+
+    @Value("${ws_server_password}")
+    private String serverPassword;
 
     @Bean
     public Jaxb2Marshaller marshaller() {
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("org.example.serviceproxy");
+        marshaller.setContextPath(MarshallerContextPath);
         return marshaller;
     }
 
     @Bean
     public ProductClient productClient() {
         ProductClient client = new ProductClient();
-        client.setDefaultUri("http://localhost:8080/ws");
-        client.setWebServiceTemplate(webServiceTemplate());
+        client.setDefaultUri(WS_ENDPOINT_URL);
+        client.setWebServiceTemplate(webServiceTemplate(marshaller()));
         return client;
     }
 
+    // Giden istekler için header a client security bilgileri eklenerek doğrulama yapılıyor.
     @Bean
     public Wss4jSecurityInterceptor securityInterceptor() {
         Wss4jSecurityInterceptor securityInterceptor = new Wss4jSecurityInterceptor();
-        securityInterceptor.setSecurementActions(WSHandlerConstants.USERNAME_TOKEN);
-        securityInterceptor.setSecurementPasswordType(WSConstants.PW_TEXT);
-        securityInterceptor.setSecurementUsername(username);
-        securityInterceptor.setSecurementPassword(password);
-
-        // Giden istekler için güvenlik doğrulama
-        securityInterceptor.setValidationCallbackHandler(callbackHandler());
+        securityInterceptor.setSecurementActions(WSHandlerConstants.USERNAME_TOKEN);//request header a username token ekleniyor
+        securityInterceptor.setSecurementPasswordType(WSConstants.PW_DIGEST); //request header daki password type belirleniyor
+        securityInterceptor.setSecurementUsername(clientUsername); //request header a client username ekleniyor
+        securityInterceptor.setSecurementPassword(clientPassword); //request header a client password ekleniyor
+        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//response header daki server username token doğrulaması yapılıyor
+        securityInterceptor.setValidationCallbackHandler(callbackHandler()); //response header daki server username ve password doğrulaması yapılıyor
 
         return securityInterceptor;
     }
 
+    //Server tarafından gelen response daki server username ve password doğrulanıyor
     @Bean
     public SimplePasswordValidationCallbackHandler callbackHandler() {
         SimplePasswordValidationCallbackHandler handler = new SimplePasswordValidationCallbackHandler();
-        handler.setUsersMap(Collections.singletonMap(username, password));
+        handler.setUsersMap(Collections.singletonMap(serverUsername, serverPassword));
         return handler;
     }
 
     @Bean
-    public WebServiceTemplate webServiceTemplate() {
+    public WebServiceTemplate webServiceTemplate(Jaxb2Marshaller marshaller) {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
+        webServiceTemplate.setMarshaller(marshaller);
+        webServiceTemplate.setUnmarshaller(marshaller);
         webServiceTemplate.setInterceptors(new ClientInterceptor[] { securityInterceptor() });
-        webServiceTemplate.setMarshaller(marshaller());
-        webServiceTemplate.setUnmarshaller(marshaller());
         return webServiceTemplate;
     }
 }

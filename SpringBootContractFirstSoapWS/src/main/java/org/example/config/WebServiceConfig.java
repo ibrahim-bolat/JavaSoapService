@@ -23,15 +23,22 @@ import java.util.List;
 
 import static org.example.constant.WSEndpoint.NAMESPACE_URI;
 
+
 @EnableWs
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 
-    @Value("${ws_username}")
-    private String username;
+    @Value("${ws_server_username}")
+    private String serverUsername;
 
-    @Value("${ws_password}")
-    private String password;
+    @Value("${ws_server_password}")
+    private String serverPassword;
+
+    @Value("${ws_client_username}")
+    private String clientUsername;
+
+    @Value("${ws_client_password}")
+    private String clientPassword;
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext applicationContext) {
@@ -57,23 +64,25 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
     }
 
+    //Dönen response header a server security bilgileri eklenerek doğrulama yapılıyor.
     @Bean
     public Wss4jSecurityInterceptor securityInterceptor() {
         Wss4jSecurityInterceptor securityInterceptor = new Wss4jSecurityInterceptor();
-        securityInterceptor.setSecurementActions(WSHandlerConstants.USERNAME_TOKEN);
-        securityInterceptor.setSecurementPasswordType(WSConstants.PW_TEXT);
-        securityInterceptor.setSecurementUsername(username);
-        securityInterceptor.setSecurementPassword(password);
+        securityInterceptor.setSecurementActions(WSHandlerConstants.USERNAME_TOKEN);//response header a username token ekleniyor
+        securityInterceptor.setSecurementPasswordType(WSConstants.PW_DIGEST); //response header daki password type belirleniyor
+        securityInterceptor.setSecurementUsername(serverUsername); //response header a server username ekleniyor
+        securityInterceptor.setSecurementPassword(serverPassword); //response header a server password ekleniyor
+        securityInterceptor.setValidationActions(WSHandlerConstants.USERNAME_TOKEN);//request header daki client username token doğrulaması yapılıyor
+        securityInterceptor.setValidationCallbackHandler(callbackHandler()); //request header daki client username ve password doğrulaması yapılıyor
 
-        // Gelen istekler için güvenlik doğrulama
-        securityInterceptor.setValidationCallbackHandler(callbackHandler());
         return securityInterceptor;
     }
 
+    //Client tarafından gelen request teki client username ve password doğrulanıyor
     @Bean
     public SimplePasswordValidationCallbackHandler callbackHandler() {
         SimplePasswordValidationCallbackHandler handler = new SimplePasswordValidationCallbackHandler();
-        handler.setUsersMap(Collections.singletonMap(username, password));
+        handler.setUsersMap(Collections.singletonMap(clientUsername, clientPassword));
         return handler;
     }
 
